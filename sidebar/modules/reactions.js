@@ -392,7 +392,9 @@ function addReactionButton(messageContainer) {
 function showReactionPicker(messageId, buttonElement) {
     // Remove any existing picker
     const existingPicker = document.querySelector('.reaction-picker');
-    if (existingPicker) existingPicker.remove();
+    if (existingPicker) {
+        existingPicker.remove();
+    }
 
     // Create new picker
     const picker = document.createElement('div');
@@ -412,7 +414,7 @@ function showReactionPicker(messageId, buttonElement) {
     // Position picker relative to button
     const rect = buttonElement.getBoundingClientRect();
     picker.style.position = 'fixed';
-    picker.style.left = `${rect.left - picker.offsetWidth/2 + buttonElement.offsetWidth/2}px`;
+    picker.style.left = `${rect.left - picker.offsetWidth / 2 + buttonElement.offsetWidth / 2}px`;
     picker.style.top = `${rect.top - 10 - picker.offsetHeight}px`;
 
     document.body.appendChild(picker);

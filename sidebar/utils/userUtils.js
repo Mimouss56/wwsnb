@@ -3,16 +3,21 @@
  * @returns {string|undefined} The current user's full name or undefined if not found
  */
 function getActualUserName() {
-
     const userElement = document.querySelector('[aria-label*="Vous"]');
-    if (!userElement) return;
+    if (!userElement) {
+        return;
+    }
 
     const ariaLabel = userElement.getAttribute('aria-label');
-    if (!ariaLabel) return;
+    if (!ariaLabel) {
+        return;
+    }
 
-    // Extrait tout ce qui se trouve avant " (vous)"
-    const fullNameMatch = ariaLabel.match(/(.+?)\s*\Vous/);
-    if (!fullNameMatch) return;
+    // Extrait tout ce qui se trouve avant " Vous"
+    const fullNameMatch = ariaLabel.match(/(.+?)\s*Vous/);
+    if (!fullNameMatch) {
+        return;
+    }
 
     // Retourne le nom complet trouvé
     return fullNameMatch[1].trim();

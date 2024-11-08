@@ -1,0 +1,25 @@
+{
+  "name": "wwsnb",
+  "version": "0.2.0",
+  "type": "module",
+  "description": "Retrieve functionality from Slippers for BBB.",
+  "repository": "https://github.com/Teyk0o/wwsnb",
+  "keywords": [
+    "oclock",
+    "school",
+    "bbb",
+    "slippers"
+  ],
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "lint:check": "eslint . --max-warnings 0"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.14.0",
+    "eslint": "^9.14.0",
+    "globals": "^15.12.0"
+  }
+}

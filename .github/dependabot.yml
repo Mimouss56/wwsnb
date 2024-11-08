@@ -1,10 +1,11 @@
 version: 2
 updates:
-  # Maintenir les dépendances npm à jour (non utilisé pour le moment)
+  # Maintenir les dépendances npm à jour
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 10
     groups:
       # Grouper les mises à jour mineures et de patch
       minor-and-patch:

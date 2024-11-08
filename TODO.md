@@ -9,6 +9,7 @@ Voici les fonctionnalités et améliorations prévues pour ce projet.
 
 ## Améliorations à apporter
 - [ ] Refonte de l'interface réseau du système de réactions
+- [ ] Passer le projet sur TypeScript
 
 ## Améliorations futures
 

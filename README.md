@@ -1,5 +1,7 @@
 # WWSNB - We Want Slippers Not BBB 🛋️
 
+![ESLint Badge](https://github.com/Teyk0o/wwsnb/actions/workflows/lint.yml/badge.svg)
+
 WWSNB est une extension Firefox qui améliore l'expérience de BigBlueButton pour les cours à distance de l'école O'Clock en ajoutant des fonctionnalités essentielles pour une meilleure communication.
 
 ## 🌟 Fonctionnalités

@@ -112,7 +112,9 @@ function handleGlobalClick(e) {
  * @param {KeyboardEvent} e Keyboard event
  */
 function handleKeyDownGlobal(e) {
-    if (!suggestionsBox) return;
+    if (!suggestionsBox) {
+        return;
+    }
 
     if (e.target.id === 'message-input') {
         if (e.key === 'Enter') {
@@ -143,7 +145,9 @@ function handleKeyDownGlobal(e) {
  * @param {Event} e Input event
  */
 function handleInput(e) {
-    if (e.target.id !== 'message-input') return;
+    if (e.target.id !== 'message-input') {
+        return;
+    }
 
     const text = e.target.value;
     const cursorPosition = e.target.selectionStart;
@@ -209,7 +213,9 @@ function showSuggestions(users, inputElement, atIndex) {
     users.forEach((user, index) => {
         const item = document.createElement('div');
         item.className = 'mention-suggestion-item';
-        if (index === 0) item.classList.add('selected');
+        if (index === 0) {
+            item.classList.add('selected');
+        }
 
         const avatar = document.createElement('div');
         avatar.className = 'mention-avatar';
@@ -230,7 +236,9 @@ function showSuggestions(users, inputElement, atIndex) {
 
         item.addEventListener('mouseover', () => {
             const selected = suggestionsBox.querySelector('.selected');
-            if (selected) selected.classList.remove('selected');
+            if (selected) {
+                selected.classList.remove('selected');
+            }
             item.classList.add('selected');
         });
 
@@ -277,8 +285,12 @@ function navigateSuggestions(direction) {
     items[currentIndex].classList.remove('selected');
 
     let newIndex = currentIndex + direction;
-    if (newIndex < 0) newIndex = items.length - 1;
-    if (newIndex >= items.length) newIndex = 0;
+    if (newIndex < 0) {
+        newIndex = items.length - 1;
+    }
+    if (newIndex >= items.length) {
+        newIndex = 0;
+    }
 
     items[newIndex].classList.add('selected');
     items[newIndex].scrollIntoView({ block: 'nearest' });
@@ -289,17 +301,23 @@ function navigateSuggestions(direction) {
  * @param {HTMLElement} item Selected suggestion item
  */
 function selectSuggestion(item) {
-    if (!currentInput || !item) return;
+    if (!currentInput || !item) {
+        return;
+    }
 
     const text = currentInput.value;
     const cursorPos = currentInput.selectionStart;
     const textUpToCursor = text.slice(0, cursorPos);
     const lastAtIndex = textUpToCursor.lastIndexOf('@');
 
-    if (lastAtIndex === -1) return;
+    if (lastAtIndex === -1) {
+        return;
+    }
 
     const username = item.querySelector('span').textContent;
-    if (!username) return;
+    if (!username) {
+        return;
+    }
 
     const beforeMention = text.slice(0, lastAtIndex);
     const afterMention = text.slice(cursorPos);

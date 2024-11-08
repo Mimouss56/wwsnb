@@ -36,9 +36,7 @@ function launchWWSNB() {
                 if (messageContainer && !messageContainer.classList.contains('question-highlight')) {
                     messageContainer.classList.add('question-highlight');
                 }
-            }
-            // Check for mentions of current user
-            else if (message.textContent.includes('@' + actualUserName)) {
+            } else if (message.textContent.includes('@' + actualUserName)) {
                 const messageContainer = message.closest('.sc-leYdVB');
                 if (messageContainer && !messageContainer.classList.contains('mention-highlight')) {
                     messageContainer.classList.add('mention-highlight');

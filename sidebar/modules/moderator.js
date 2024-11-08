@@ -32,7 +32,9 @@ function checkModeratorMessages() {
 
     messages.forEach(messageContainer => {
         // Skip already processed messages
-        if (messageContainer.hasAttribute('moderator-checked')) return;
+        if (messageContainer.hasAttribute('moderator-checked')) {
+            return;
+        }
         messageContainer.setAttribute('moderator-checked', 'true');
 
         // Look for moderator avatar
