@@ -1,0 +1,21 @@
+version: 2
+updates:
+  # Maintenir les dépendances npm à jour (non utilisé pour le moment)
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      # Grouper les mises à jour mineures et de patch
+      minor-and-patch:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+
+  # Maintenir les GitHub Actions à jour
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
