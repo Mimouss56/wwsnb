@@ -1,6 +1,6 @@
-// eslint.config.js
 import eslint from '@eslint/js';
 import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
 export default [
     eslint.configs.recommended,
@@ -29,6 +29,10 @@ export default [
                 updateReactionDisplay: 'readonly',
                 setupMentions: 'readonly',
 
+            },
+            parser: tseslint.parser,
+            parserOptions: {
+                project: './tsconfig.json',
             },
             ecmaVersion: 2021,
             sourceType: 'module',

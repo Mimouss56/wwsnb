@@ -17,14 +17,14 @@
     {
       "matches": ["*://*.oclock.school/*"],
       "js": [
-        "sidebar/utils/userUtils.js",
-        "sidebar/modules/questions.js",
-        "sidebar/modules/mentions.js",
-        "sidebar/modules/reactions.js",
-        "sidebar/modules/moderator.js",
-        "sidebar/content.js"
+        "dist/utils/userUtils.js",
+        "dist/modules/questions.js",
+        "dist/modules/mentions.js",
+        "dist/modules/reactions.js",
+        "dist/modules/moderator.js",
+        "dist/content.js"
       ],
-      "css": ["sidebar/styles.css"]
+      "css": ["src/styles/styles.css"]
     }
   ]
 }
