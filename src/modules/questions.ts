@@ -38,6 +38,7 @@ function checkNewMessages() {
         }
     }
     console.log('[WWSNB] New messages checked');
+
 }
 
 // Initialize module
