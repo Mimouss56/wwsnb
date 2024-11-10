@@ -31,9 +31,10 @@ function getAllUsers() {
     const users = new Set();
 
     // Get users from the user list
-    document.querySelectorAll('[data-test="userListItem"]').forEach(item => {
+    const userListItemElem = document.querySelectorAll('[data-test="userListItem"]') as unknown as HTMLElement[];
+    for (const item of userListItemElem) {
         const userNameElement = item.querySelector('[aria-label*="Statut"]');
-        if (userNameElement) {
+        if (userNameElement?.textContent) {
             const rawName = userNameElement.textContent.trim();
             const name = cleanUsername(rawName);
             users.add(JSON.stringify({
@@ -42,12 +43,12 @@ function getAllUsers() {
                 bgColor: generateUserColor(name)
             }));
         }
-    });
-
+    }
+    const dataMessageID =document.querySelectorAll('[data-message-id]') as unknown as HTMLElement[];
     // Get users from chat messages
-    document.querySelectorAll('[data-message-id]').forEach(message => {
+    for (const message of dataMessageID) {
         const userNameElement = message.querySelector('.sc-gFkHhu span');
-        if (userNameElement) {
+        if (userNameElement?.textContent) {
             const rawName = userNameElement.textContent.trim();
             const name = cleanUsername(rawName);
             if (name && name !== 'System Message') {
@@ -58,7 +59,7 @@ function getAllUsers() {
                 }));
             }
         }
-    });
+    }
 
     return Array.from(users).map(user => JSON.parse(user));
 }
@@ -68,7 +69,7 @@ function getAllUsers() {
  * @param {string} name The user's full name
  * @returns {string} The user's initials in uppercase
  */
-function generateInitials(name) {
+function generateInitials(name: string): string {
     return name.split(' ')
         .map(word => word[0])
         .join('')
@@ -80,7 +81,7 @@ function generateInitials(name) {
  * @param {string} name The user's name
  * @returns {string} HSL color string
  */
-function generateUserColor(name) {
+function generateUserColor(name:string):string {
     return `hsl(${name.length * 137.508 % 360}, 70%, 80%)`;
 }
 
@@ -89,7 +90,7 @@ function generateUserColor(name) {
  * @param {string} val The string to capitalize
  * @returns {string} The capitalized string
  */
-function capitalizeFirstLetter(val) {
+function capitalizeFirstLetter(val:string):string {
     return String(val).charAt(0).toUpperCase() + String(val).slice(1);
 }
 
@@ -98,7 +99,7 @@ function capitalizeFirstLetter(val) {
  * @param {string} name The raw username to clean
  * @returns {string} The cleaned username
  */
-function cleanUsername(name) {
+function cleanUsername(name:string):string {
     return name
         .replace(/\s+Verrouillé($|\s)/g, '')    // Remove "Verrouillé" status
         .replace(/\s+Webcam($|\s)/g, '')        // Remove "Webcam" status
