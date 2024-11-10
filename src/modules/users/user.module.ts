@@ -10,7 +10,7 @@ export function getCachedUsers(): User[] {
   const sessionLastCacheTime = sessionStorage.getItem('lastCacheTime');
   const lastCacheTime = sessionLastCacheTime ? Number(sessionLastCacheTime) : 0;
   const now = Date.now();
-  if (! sessionCachedUsers || now - lastCacheTime > CACHE_DURATION) {
+  if (! sessionCachedUsers || ((now - lastCacheTime) > CACHE_DURATION)) {
       console.log('Fetching users...');
       const getAllCachedUsers = getAllUsers();
       sessionStorage.setItem('cachedUsers', JSON.stringify(getAllCachedUsers));
@@ -95,7 +95,6 @@ export function generateInitials(name: string): string {
       .toUpperCase();
 }
 
-
 /**
  * Generate a consistent color for a user based on their name
  * @param {string} name The user's name
@@ -104,7 +103,6 @@ export function generateInitials(name: string): string {
 export function generateUserColor(name:string):string {
   return `hsl(${name.length * 137.508 % 360}, 70%, 80%)`;
 }
-
 
 /**
  * Clean a username by removing status indicators and extra spaces
@@ -118,4 +116,21 @@ export function cleanUsername(name:string):string {
       .replace(/\s+Mobile($|\s)/g, '')        // Remove "Mobile" status
       .replace(/\s*\|\s*/g, '')               // Remove separators
       .trim();                                // Remove extra spaces
+}
+
+export function getActualUserName() {
+  const userElement = document.querySelector('[aria-label*="Vous"]');
+  if (!userElement) return;
+
+  const ariaLabel = userElement.getAttribute('aria-label');
+  if (!ariaLabel) return;
+
+  // Extrait tout ce qui se trouve avant " Vous"
+  const fullNameMatch = ariaLabel.match(/(.+?)\s*Vous/);
+  if (!fullNameMatch) {
+      return;
+  }
+
+  // Retourne le nom complet trouvé
+  return fullNameMatch[1].trim();
 }
