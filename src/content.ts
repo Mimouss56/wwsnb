@@ -20,6 +20,7 @@ const app = {
      * Check new messages for questions and mentions
      */
     checkNewMessages: () => {
+
         const messages = document.querySelectorAll('[data-test="chatUserMessageText"]') as unknown as HTMLDivElement[];
         const actualUserName = getActualUserName();
 
@@ -38,6 +39,7 @@ const app = {
 
     init: ()=> {
     console.log('WWSNB by Théo Vilain successfully loaded');
+
 
     // Start observing document for changes
     app.observer.observe(document.body, app.config);
