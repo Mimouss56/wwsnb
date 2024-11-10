@@ -1,3 +1,5 @@
+import { cleanUsername, generateInitials, generateUserColor } from "@/modules/users/user.module";
+
 /**
  * Get the current user's full name from the UI
  * @returns {string|undefined} The current user's full name or undefined if not found
@@ -65,27 +67,6 @@ function getAllUsers() {
 }
 
 /**
- * Generate initials from a user's name
- * @param {string} name The user's full name
- * @returns {string} The user's initials in uppercase
- */
-function generateInitials(name: string): string {
-    return name.split(' ')
-        .map(word => word[0])
-        .join('')
-        .toUpperCase();
-}
-
-/**
- * Generate a consistent color for a user based on their name
- * @param {string} name The user's name
- * @returns {string} HSL color string
- */
-function generateUserColor(name:string):string {
-    return `hsl(${name.length * 137.508 % 360}, 70%, 80%)`;
-}
-
-/**
  * Capitalize the first letter of a string
  * @param {string} val The string to capitalize
  * @returns {string} The capitalized string
@@ -94,16 +75,4 @@ function capitalizeFirstLetter(val:string):string {
     return String(val).charAt(0).toUpperCase() + String(val).slice(1);
 }
 
-/**
- * Clean a username by removing status indicators and extra spaces
- * @param {string} name The raw username to clean
- * @returns {string} The cleaned username
- */
-function cleanUsername(name:string):string {
-    return name
-        .replace(/\s+Verrouillé($|\s)/g, '')    // Remove "Verrouillé" status
-        .replace(/\s+Webcam($|\s)/g, '')        // Remove "Webcam" status
-        .replace(/\s+Mobile($|\s)/g, '')        // Remove "Mobile" status
-        .replace(/\s*\|\s*/g, '')               // Remove separators
-        .trim();                                // Remove extra spaces
-}
+
