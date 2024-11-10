@@ -1,31 +1,25 @@
 /**
  * Initialize all WWSNB modules
  */
-function launchWWSNB() {
-    console.log('WWSNB by Théo Vilain successfully loaded');
-
-    // Create observer for new messages
-    const observer = new MutationObserver((mutations) => {
-        for (const mutation of mutations) {
-            if (mutation.addedNodes.length) {
-                checkNewMessages();
-            }
-        }
-    });
-
+const app = {
     // Configure observer settings
-    const config = {
+    config : {
         childList: true,
         subtree: true
-    };
-
-    // Start observing document for changes
-    observer.observe(document.body, config);
+    },
+    // Create observer for new messages
+    observer : new MutationObserver(
+        (mutations) => {
+            for (const mutation of mutations) {
+                mutation.addedNodes.length && checkNewMessages() 
+            }
+        }
+    ),
 
     /**
      * Check new messages for questions and mentions
      */
-    function checkNewMessages() {
+    checkNewMessages: () => {
         const messages = document.querySelectorAll('[data-test="chatUserMessageText"]') as unknown as HTMLDivElement[];
         const actualUserName = getActualUserName();
 
@@ -40,8 +34,13 @@ function launchWWSNB() {
                 messageContainer && !messageContainer.classList.contains('mention-highlight') && messageContainer.classList.add('mention-highlight')
             }
         }
-    }
+    },
 
+    init: ()=> {
+    console.log('WWSNB by Théo Vilain successfully loaded');
+
+    // Start observing document for changes
+    app.observer.observe(document.body, app.config);
     // Initialize all modules with a slight delay to ensure DOM is ready
     setTimeout(() => {
         console.log('[WWSNB] Starting modules initialization');
@@ -52,11 +51,8 @@ function launchWWSNB() {
         setupModerator();
         console.log('[WWSNB] Modules initialized successfully');
     }, 1000);
-}
 
-// Launch the application when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', launchWWSNB);
-} else {
-    launchWWSNB();
+    }
 }
+// Launch the application when DOM is ready
+document.readyState === 'loading'? document.addEventListener('DOMContentLoaded', app.init) : app.init();

@@ -24,6 +24,7 @@ function setupQuestions() {
  * Check new messages for question tag and highlight them
  */
 function checkNewMessages() {
+    console.log('[WWSNB] Start checking new messages for questions');
     // Get all messages using data-test attribute
     const messages = document.querySelectorAll('[data-test="chatUserMessageText"]') as unknown as HTMLElement[];
 
@@ -36,6 +37,7 @@ function checkNewMessages() {
             
         }
     }
+    console.log('[WWSNB] New messages checked');
 }
 
 // Initialize module
