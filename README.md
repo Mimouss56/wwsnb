@@ -44,6 +44,8 @@ Les contributions sont les bienvenues ! Voici comment contribuer :
 
 Attention, merci de respecter les guidelines de contribution, sinon votre PR sera refusée.
 
+⚒️ **Serveur de développement BBB : https://bbb.theovilain.com/**
+
 ### 📋 Guidelines de contribution
 
 #### Style de code
