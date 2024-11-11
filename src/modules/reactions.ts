@@ -1,8 +1,15 @@
+import type { User } from "../../types/user";
 import { getActualUserName } from "./users/user.module";
+
+declare global {
+    interface Window {
+        wwsnbVirtualGrid?: HTMLElement;
+    }
+}
 
 // Global variables for reactions system
 let messageReactions = new Map();
-let reactionChannel;
+let reactionChannel: BroadcastChannel;
 
 // Available reaction emojis
 const availableReactions = [
@@ -60,12 +67,10 @@ export function setupReactions() {
     const virtualGrid = document.querySelector('.ReactVirtualized__Grid');
     virtualizedGrid && messagesObserver.observe(virtualizedGrid, config);
 
-    if (chatContainer) {
-        messagesObserver.observe(chatContainer, config);
-    }
+    chatContainer && messagesObserver.observe(chatContainer, config);
 
     if (virtualGrid) {
-        window.wwsnbVirtualGrid = virtualGrid;
+        window.wwsnbVirtualGrid = virtualGrid as HTMLElement;
     }
 
     // Observe body for structure changes
@@ -158,9 +163,9 @@ function initializeReactions(sessionToken: string) {
 function handleReactionUpdate(event: MessageEvent) {
     if (event.data.type === 'update_reactions') {
         try {
-            const parsedReactions = JSON.parse(event.data.reactions);
+            const parsedReactions: [string, { [key: string]: string[] }][] = JSON.parse(event.data.reactions);
             messageReactions = new Map(
-                Array.from(parsedReactions).map(([key, value]) => [
+                parsedReactions.map(([key, value]) => [
                     key,
                     new Map(Object.entries(value))
                 ])
@@ -181,7 +186,7 @@ function saveReactionsToStorage() {
         // Clean up reactions for non-existent messages
         const existingMessageIds = new Set(
             Array.from(document.querySelectorAll('.sc-leYdVB'))
-                .map(container => container.dataset.messageId)
+                .map(container => (container as HTMLElement).dataset.messageId)
                 .filter(Boolean)
         );
 
@@ -195,7 +200,7 @@ function saveReactionsToStorage() {
         messageReactions = cleanedReactions;
 
         // Convert and save
-        const reactionsObj: { [key: string]: any } = {};
+        const reactionsObj: { [key: string]: { [key: string]: string[] } } = {};
         messageReactions.forEach((reactions, messageId) => {
             for (const [emoji, users] of reactions) {
                 reactionsObj[messageId] = reactionsObj[messageId] || {};
@@ -267,7 +272,7 @@ function updateAllReactionDisplays() {
                 messageContainer.appendChild(reactionsContainer);
             }
 
-            updateReactionDisplay(messageId, reactionsContainer);
+            updateReactionDisplay(messageId, reactionsContainer as HTMLElement);
             (messageContainer as HTMLElement).dataset.hasReactions = 'true';
         }
     };
@@ -283,7 +288,7 @@ function addReaction(messageId:string, emoji: string ) {
     const userName = getActualUserName();
 
     if (reactions.has(emoji) && reactions.get(emoji).includes(userName)) {
-        const users = reactions.get(emoji).filter(user => user !== userName);
+        const users = reactions.get(emoji).filter((user: User | undefined) => user !== userName);
         if (users.length === 0) {
             reactions.delete(emoji);
         } else {
@@ -422,7 +427,7 @@ function showReactionPicker(messageId: string, buttonElement: HTMLElement) {
 
     // Close picker when clicking outside
     document.addEventListener('click', function closePickerOnClickOutside(e) {
-        if (!picker.contains(e.target) && e.target !== buttonElement) {
+        if (!picker.contains(e.target as Node) && e.target !== buttonElement) {
             picker.remove();
             document.removeEventListener('click', closePickerOnClickOutside);
         }
